@@ -2,6 +2,7 @@ package cache_stampede.application;
 
 import cache_stampede.dto.ArticleCreateRequest;
 import cache_stampede.dto.ArticleOverviewResponse;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +26,13 @@ public class ArticleService {
     }
 
     @Transactional(readOnly = true)
-    public List<ArticleOverviewResponse> findAllOverviewWithoutCache() {
-        return articleFinder.findAllOverviewWithoutCache();
+    public List<ArticleOverviewResponse> findAllOverview() {
+        return articleFinder.findAllOverview();
+    }
+
+    @Cacheable(value = "ArticleFinder.findAllOverview")
+    @Transactional(readOnly = true)
+    public List<ArticleOverviewResponse> findAllOverviewWithCache() {
+        return articleFinder.findAllOverview();
     }
 }

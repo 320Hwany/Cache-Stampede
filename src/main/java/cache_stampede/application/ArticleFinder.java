@@ -20,7 +20,7 @@ public class ArticleFinder {
     }
 
     @Transactional(readOnly = true)
-    public List<ArticleOverviewResponse> findAllOverviewWithoutCache() {
+    public List<ArticleOverviewResponse> findAllOverview() {
         List<Article> articles = articleRepository.findAll();
 
         return articles.stream()

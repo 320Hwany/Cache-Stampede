@@ -24,8 +24,14 @@ public class ArticleController {
     }
 
     @GetMapping("/articles-overview")
-    public CollectionResponse<List<ArticleOverviewResponse>> findAllArticleOverview() {
-        List<ArticleOverviewResponse> articleOverviewResponses = articleService.findAllOverviewWithoutCache();
+    public CollectionResponse<List<ArticleOverviewResponse>> findAllOverview() {
+        List<ArticleOverviewResponse> articleOverviewResponses = articleService.findAllOverview();
+        return CollectionResponse.from(articleOverviewResponses);
+    }
+
+    @GetMapping("/articles-overview-with-cache")
+    public CollectionResponse<List<ArticleOverviewResponse>> findAllOverviewWithCache() {
+        List<ArticleOverviewResponse> articleOverviewResponses = articleService.findAllOverviewWithCache();
         return CollectionResponse.from(articleOverviewResponses);
     }
 }
