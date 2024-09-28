@@ -27,4 +27,21 @@ public class Article {
     public static Article toEntity(final String title, final String contents) {
         return new Article(title, contents, 0);
     }
+
+    // getter
+    public Long getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getContents() {
+        return contents;
+    }
+
+    public int getViews() {
+        return views;
+    }
 }

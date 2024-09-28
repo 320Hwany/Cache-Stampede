@@ -2,10 +2,11 @@ package cache_stampede.presentation;
 
 import cache_stampede.application.ArticleService;
 import cache_stampede.dto.ArticleCreateRequest;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import cache_stampede.dto.ArticleOverviewResponse;
+import cache_stampede.dto.CollectionResponse;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("/api")
 @RestController
@@ -20,5 +21,11 @@ public class ArticleController {
     @PostMapping("/articles")
     public void createArticle(@RequestBody final ArticleCreateRequest dto) {
         articleService.createArticle(dto);
+    }
+
+    @GetMapping("/articles-overview")
+    public CollectionResponse<List<ArticleOverviewResponse>> findAllArticleOverview() {
+        List<ArticleOverviewResponse> articleOverviewResponses = articleService.findAllOverviewWithoutCache();
+        return CollectionResponse.from(articleOverviewResponses);
     }
 }
