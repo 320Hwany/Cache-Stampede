@@ -1,8 +1,10 @@
 package cache_stampede.application;
 
 import cache_stampede.dto.ArticleOverviewResponse;
+import cache_stampede.dto.ArticleViewsResponse;
 import cache_stampede.persistence.Article;
 import cache_stampede.persistence.ArticleRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +26,21 @@ public class ArticleFinder {
         List<Article> articles = articleRepository.findAll();
 
         return articles.stream()
-                .map(article -> ArticleOverviewResponse.of(article.getTitle(), article.getViews()))
+                .map(article ->
+                        ArticleOverviewResponse.of(
+                                article.getId(),
+                                article.getTitle(),
+                                article.getAuthor()
+                        )
+                )
                 .collect(toList());
+    }
+
+    @Cacheable(value = "ArticleFinder.findViewsById", key = "#articleId")
+    @Transactional(readOnly = true)
+    public ArticleViewsResponse findViewsById(final long articleId) {
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(IllegalArgumentException::new);
+        return ArticleViewsResponse.of(articleId, article.getViews());
     }
 }

@@ -11,6 +11,8 @@ public class Article {
 
     private String title;
 
+    private String author;
+
     private String contents;
 
     private int views;
@@ -18,14 +20,15 @@ public class Article {
     protected Article() {
     }
 
-    private Article(final String title, final String contents, final int views) {
+    public Article(final String title, final String author, final String contents, final int views) {
         this.title = title;
+        this.author = author;
         this.contents = contents;
         this.views = views;
     }
 
-    public static Article toEntity(final String title, final String contents) {
-        return new Article(title, contents, 0);
+    public static Article toEntity(final String title, final String author, final String contents) {
+        return new Article(title, author, contents, 0);
     }
 
     // getter
@@ -35,6 +38,10 @@ public class Article {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getAuthor() {
+        return author;
     }
 
     public String getContents() {

@@ -1,11 +1,13 @@
 package cache_stampede.application;
 
 import cache_stampede.dto.ArticleCreateRequest;
+import cache_stampede.dto.ArticleHomeResponse;
 import cache_stampede.dto.ArticleOverviewResponse;
-import org.springframework.cache.annotation.Cacheable;
+import cache_stampede.dto.ArticleViewsResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,13 +28,18 @@ public class ArticleService {
     }
 
     @Transactional(readOnly = true)
-    public List<ArticleOverviewResponse> findAllOverview() {
-        return articleFinder.findAllOverview();
-    }
+    public List<ArticleHomeResponse> findAllOverview() {
+        List<ArticleOverviewResponse> overviewResponses = articleFinder.findAllOverview();
+        List<ArticleHomeResponse> articleHomeResponses = new ArrayList<>();
 
-    @Cacheable(value = "ArticleFinder.findAllOverview")
-    @Transactional(readOnly = true)
-    public List<ArticleOverviewResponse> findAllOverviewWithCache() {
-        return articleFinder.findAllOverview();
+        for (ArticleOverviewResponse overviewResponse : overviewResponses) {
+            ArticleViewsResponse views = articleFinder.findViewsById(overviewResponse.articleId());
+
+            articleHomeResponses.add(
+                    ArticleHomeResponse.of(overviewResponse, views)
+            );
+        }
+
+        return articleHomeResponses;
     }
 }

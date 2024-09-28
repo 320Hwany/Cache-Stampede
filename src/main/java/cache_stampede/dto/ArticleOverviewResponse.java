@@ -1,11 +1,12 @@
 package cache_stampede.dto;
 
 public record ArticleOverviewResponse(
+        long articleId,
         String title,
-        int views
+        String author
 ) {
 
-    public static ArticleOverviewResponse of(final String title, final int views) {
-        return new ArticleOverviewResponse(title, views);
+    public static ArticleOverviewResponse of(final long articleId, final String title, final String author) {
+        return new ArticleOverviewResponse(articleId, title, author);
     }
 }

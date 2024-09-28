@@ -17,7 +17,7 @@ public class ArticleAppender {
 
     @Transactional
     public void createArticle(final ArticleCreateRequest dto) {
-        Article article = Article.toEntity(dto.title(), dto.contents());
+        Article article = Article.toEntity(dto.title(), dto.author(), dto.contents());
         articleRepository.save(article);
     }
 }
