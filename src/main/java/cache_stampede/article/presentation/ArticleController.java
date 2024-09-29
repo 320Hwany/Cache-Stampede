@@ -1,7 +1,9 @@
-package cache_stampede.presentation;
+package cache_stampede.article.presentation;
 
-import cache_stampede.application.ArticleService;
-import cache_stampede.dto.*;
+import cache_stampede.article.application.ArticleService;
+import cache_stampede.article.dto.ArticleCreateRequest;
+import cache_stampede.article.dto.ArticleHomeResponse;
+import cache_stampede.global.dto.CollectionResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +21,11 @@ public class ArticleController {
     @PostMapping("/articles")
     public void createArticle(@RequestBody final ArticleCreateRequest dto) {
         articleService.createArticle(dto);
+    }
+
+    @GetMapping("/articles/{articleId}")
+    public void viewArticle(@PathVariable final long articleId) {
+        articleService.viewArticle(articleId);
     }
 
     @GetMapping("/articles-overview")

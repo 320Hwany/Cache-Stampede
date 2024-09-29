@@ -1,4 +1,4 @@
-package cache_stampede.dto;
+package cache_stampede.article.dto;
 
 public record ArticleOverviewResponse(
         long articleId,

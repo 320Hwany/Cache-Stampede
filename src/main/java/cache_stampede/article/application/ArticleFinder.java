@@ -1,9 +1,9 @@
-package cache_stampede.application;
+package cache_stampede.article.application;
 
-import cache_stampede.dto.ArticleOverviewResponse;
-import cache_stampede.dto.ArticleViewsResponse;
-import cache_stampede.persistence.Article;
-import cache_stampede.persistence.ArticleRepository;
+import cache_stampede.article.dto.ArticleOverviewResponse;
+import cache_stampede.article.vo.ArticleViews;
+import cache_stampede.article.persistence.Article;
+import cache_stampede.article.persistence.ArticleRepository;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,9 +38,9 @@ public class ArticleFinder {
 
     @Cacheable(value = "ArticleFinder.findViewsById", key = "#articleId")
     @Transactional(readOnly = true)
-    public ArticleViewsResponse findViewsById(final long articleId) {
+    public ArticleViews findViewsById(final long articleId) {
         Article article = articleRepository.findById(articleId)
                 .orElseThrow(IllegalArgumentException::new);
-        return ArticleViewsResponse.of(articleId, article.getViews());
+        return ArticleViews.of(articleId, article.getViews());
     }
 }

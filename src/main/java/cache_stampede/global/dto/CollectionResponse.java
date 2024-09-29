@@ -1,4 +1,4 @@
-package cache_stampede.dto;
+package cache_stampede.global.dto;
 
 public record CollectionResponse<T>(
         T data

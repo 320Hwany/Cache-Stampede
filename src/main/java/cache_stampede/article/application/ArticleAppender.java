@@ -1,8 +1,8 @@
-package cache_stampede.application;
+package cache_stampede.article.application;
 
-import cache_stampede.dto.ArticleCreateRequest;
-import cache_stampede.persistence.Article;
-import cache_stampede.persistence.ArticleRepository;
+import cache_stampede.article.dto.ArticleCreateRequest;
+import cache_stampede.article.persistence.Article;
+import cache_stampede.article.persistence.ArticleRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -1,4 +1,6 @@
-package cache_stampede.dto;
+package cache_stampede.article.dto;
+
+import cache_stampede.article.vo.ArticleViews;
 
 public record ArticleHomeResponse(
         long articleId,
@@ -8,12 +10,12 @@ public record ArticleHomeResponse(
 ) {
 
     public static ArticleHomeResponse of(final ArticleOverviewResponse articleOverviewResponse,
-                                         ArticleViewsResponse articleViewsResponse) {
+                                         ArticleViews articleViews) {
         return new ArticleHomeResponse(
                 articleOverviewResponse.articleId(),
                 articleOverviewResponse.title(),
                 articleOverviewResponse.author(),
-                articleViewsResponse.views()
+                articleViews.views()
         );
     }
 }

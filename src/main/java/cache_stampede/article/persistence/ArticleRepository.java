@@ -1,4 +1,4 @@
-package cache_stampede.persistence;
+package cache_stampede.article.persistence;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

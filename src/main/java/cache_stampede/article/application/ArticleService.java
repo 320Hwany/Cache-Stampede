@@ -1,9 +1,10 @@
-package cache_stampede.application;
+package cache_stampede.article.application;
 
-import cache_stampede.dto.ArticleCreateRequest;
-import cache_stampede.dto.ArticleHomeResponse;
-import cache_stampede.dto.ArticleOverviewResponse;
-import cache_stampede.dto.ArticleViewsResponse;
+import cache_stampede.article.dto.ArticleCreateRequest;
+import cache_stampede.article.dto.ArticleHomeResponse;
+import cache_stampede.article.dto.ArticleOverviewResponse;
+import cache_stampede.article.vo.ArticleViews;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +34,7 @@ public class ArticleService {
         List<ArticleHomeResponse> articleHomeResponses = new ArrayList<>();
 
         for (ArticleOverviewResponse overviewResponse : overviewResponses) {
-            ArticleViewsResponse views = articleFinder.findViewsById(overviewResponse.articleId());
+            ArticleViews views = articleFinder.findViewsById(overviewResponse.articleId());
 
             articleHomeResponses.add(
                     ArticleHomeResponse.of(overviewResponse, views)
@@ -41,5 +42,11 @@ public class ArticleService {
         }
 
         return articleHomeResponses;
+    }
+
+    @CachePut(value = "ArticleFinder.findViewsById", key = "#articleId")
+    public ArticleViews viewArticle(final long articleId) {
+        ArticleViews articleViews = articleFinder.findViewsById(articleId);
+        return articleViews.incrementViews();
     }
 }
